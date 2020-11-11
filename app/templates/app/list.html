@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <title>Document</title>
+  
+
+</head>
+<body>
+    <h3><b><u>Todo List</u></b></h3>
+    <div class="center-column">
+        <form method="POST" action="/" >
+            {% csrf_token %}
+            {{form.title}}
+            <input class="btn btn-info" type="submit" name="createapp">
+        </form>
+        <div class="todolist">
+        {% for app in apps %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'app:update' app.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'app:delete' app.id %}">Delete</a>
+                {% if app.complete == True %} 
+                <strike>{{app.title}}</strike> 
+                {% else %} 
+                <span>{{app}}</span> 
+                {% endif %} 
+            </div>
+
+        {% endfor %}
+        
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
